@@ -4,3 +4,5 @@ VALUES
     ('Lamborghini', 'A wildly impractical car', '500000', 4),
     ('Wooden chair', 'Classic looking yet comfortable', '319.99', 3),
     ('OLED TV', 'Very impressive contrast ratio', '1260.50', 5)
+ON CONFLICT (name) DO UPDATE
+    SET stock = excluded.stock
