@@ -1,30 +1,34 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Divider, Form, Input, InputNumber, Modal, Space } from 'antd';
+import { Button, Divider, Form, Input, InputNumber, Modal } from 'antd';
 import { MouseEvent } from 'react';
 
 interface AddProductModalProps {
   visible: boolean;
   onCancel: (e: MouseEvent<HTMLButtonElement>) => void;
+  submitHandler: (value: AddProductFieldType) => void;
 }
 
-type AddProductFieldType = {
+export type AddProductFieldType = {
   name: string;
   price: string;
   stock: string;
+  description: string;
 };
 
 const AddProductModal: React.FC<AddProductModalProps> = ({
   visible,
   onCancel,
+  submitHandler,
 }) => {
   const [form] = Form.useForm();
 
-  const onSubmit = (values: AddProductFieldType) => {
-    console.log(values);
-  };
-
   const hideModal = (e: MouseEvent<HTMLButtonElement>) => {
     onCancel(e);
+    form.resetFields();
+  };
+
+  const onSubmit = (values: AddProductFieldType) => {
+    submitHandler(values);
     form.resetFields();
   };
 
@@ -54,9 +58,12 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
         initialValues={{
           stock: 1,
         }}
+        labelCol={{
+          span: 7,
+        }}
         onFinish={onSubmit}
       >
-        <Space.Compact direction='vertical'>
+        <>
           <Form.Item<AddProductFieldType>
             label='Product name'
             name='name'
@@ -65,6 +72,12 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
             ]}
           >
             <Input placeholder='Ex. Samsung 55" TV' />
+          </Form.Item>
+          <Form.Item<AddProductFieldType>
+            label='Product description'
+            name='description'
+          >
+            <Input.TextArea rows={5} />
           </Form.Item>
           <Form.Item<AddProductFieldType>
             label='Product price'
@@ -87,7 +100,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
           >
             <InputNumber />
           </Form.Item>
-        </Space.Compact>
+        </>
       </Form>
     </Modal>
   );
