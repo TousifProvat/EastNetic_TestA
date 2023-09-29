@@ -1,31 +1,22 @@
+import { PlusOutlined } from '@ant-design/icons';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Button, Col, Row, Space, Statistic, message } from 'antd';
-
-import { PlusOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
+
 import AddProductModal, {
   AddProductFieldType,
 } from './components/Modal/AddProductModal';
 import ProductCard from './components/ProductCard';
 import { IProduct } from './types';
 
-const countQuery = gql`
-  query CountQuery {
-    products_aggregate {
-      aggregate {
-        count
-      }
-    }
-  }
-`;
-
-const getAllProductsQuery = gql`
+const GET_ALL_PRODUCTS = gql`
   query GetAllProducts {
     products {
       id
       name
       price
       stock
+      description
     }
   }
 `;
@@ -55,14 +46,14 @@ const ADD_PRODUCT_MUTATION = gql`
 `;
 
 export function Products(): JSX.Element {
-  const { data } = useQuery(countQuery);
+  const [showAddProductModal, setShowAddProductModal] = useState(false);
 
-  const { data: AllProduct } = useQuery(getAllProductsQuery);
+  const { data: AllProduct } = useQuery(GET_ALL_PRODUCTS);
 
   const [addProduct, { loading }] = useMutation<AddProductFieldType>(
     ADD_PRODUCT_MUTATION,
     {
-      refetchQueries: [{ query: getAllProductsQuery }, { query: countQuery }],
+      refetchQueries: [{ query: GET_ALL_PRODUCTS }],
     }
   );
 
@@ -75,8 +66,6 @@ export function Products(): JSX.Element {
     return totalVal;
   }, [AllProduct?.products]);
 
-  const [showAddProductModal, setShowAddProductModal] = useState(false);
-
   const hideModal = () => {
     setShowAddProductModal(false);
   };
@@ -85,10 +74,13 @@ export function Products(): JSX.Element {
     try {
       message.loading('Adding product...');
       await addProduct({ variables: values });
-      setShowAddProductModal(false);
       message.destroy();
-    } catch (err: unknown) {
-      message.error('Seomthing went wrong');
+      setShowAddProductModal(false);
+    } catch (err: any) {
+      message.destroy();
+      if (err.message) {
+        message.error(err.message);
+      }
     }
   };
 
@@ -111,7 +103,7 @@ export function Products(): JSX.Element {
           <Col span={12}>
             <Statistic
               title='Total products'
-              value={data?.products_aggregate?.aggregate.count}
+              value={AllProduct?.products?.length}
             />
           </Col>
         </Row>
@@ -127,13 +119,14 @@ export function Products(): JSX.Element {
           </Button>
         </Row>
 
-        <Row justify='center' gutter={[32, 23]}>
+        <Row gutter={[32, 23]}>
           {AllProduct?.products?.map((product: IProduct) => (
             <ProductCard
               key={product.id}
               name={product.name}
               price={product.price}
               stock={product.stock}
+              description={product.description}
             />
           ))}
         </Row>

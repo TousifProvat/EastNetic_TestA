@@ -7,6 +7,7 @@ interface ProductCardProps {
   name: string;
   price: number;
   stock: number;
+  description: string | undefined;
 }
 
 const ProductCard: React.FC<ProductCardProps> = (props) => {
@@ -15,15 +16,23 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
       <Card title={props.name}>
         <Row gutter={[10, 10]}>
           <Col>
-            <Text strong>Product name :</Text>
+            <Text strong>Product name:</Text>
           </Col>
           <Col>
-            <Text>{props.name}</Text>
+            <Text data-test>{props.name}</Text>
           </Col>
         </Row>
         <Row gutter={[10, 10]}>
           <Col>
-            <Text strong>Price :</Text>
+            <Text strong>Product description:</Text>
+          </Col>
+          <Col>
+            <Text>{props.description}</Text>
+          </Col>
+        </Row>
+        <Row gutter={[10, 10]}>
+          <Col>
+            <Text strong>Price:</Text>
           </Col>
           <Col>
             <Text>{props.price}$</Text>
@@ -31,10 +40,10 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
         </Row>
         <Row gutter={[10, 10]}>
           <Col>
-            <Text strong>Stock :</Text>
+            <Text strong>Stock:</Text>
           </Col>
           <Col>
-            <Text>{props.stock}</Text>
+            <Text>{props.stock} qty</Text>
           </Col>
         </Row>
       </Card>

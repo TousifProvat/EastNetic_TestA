@@ -35,7 +35,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
   return (
     <Modal
       centered
-      visible={visible}
+      open={visible}
       onCancel={hideModal}
       title='Add new product'
       footer={[
@@ -43,6 +43,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
           Cancel
         </Button>,
         <Button
+          data-testid='add-product'
           key='submit'
           type='primary'
           icon={<PlusOutlined />}
@@ -62,6 +63,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
           span: 7,
         }}
         onFinish={onSubmit}
+        data-testid='add-product-form'
       >
         <>
           <Form.Item<AddProductFieldType>
@@ -71,13 +73,16 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
               { required: true, message: 'Please input your product name' },
             ]}
           >
-            <Input placeholder='Ex. Samsung 55" TV' />
+            <Input
+              placeholder='Ex. Samsung 55" TV'
+              data-testid='product-name'
+            />
           </Form.Item>
           <Form.Item<AddProductFieldType>
             label='Product description'
             name='description'
           >
-            <Input.TextArea rows={5} />
+            <Input.TextArea rows={5} data-testid='product-description' />
           </Form.Item>
           <Form.Item<AddProductFieldType>
             label='Product price'
@@ -86,7 +91,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
               { required: true, message: 'Please input your product price' },
             ]}
           >
-            <InputNumber addonAfter='$' />
+            <InputNumber addonAfter='$' data-testid='product-price' />
           </Form.Item>
           <Form.Item<AddProductFieldType>
             label='Product stock'
@@ -98,7 +103,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
               { required: true, message: 'Please input your product price' },
             ]}
           >
-            <InputNumber />
+            <InputNumber data-testid='product-stock' />
           </Form.Item>
         </>
       </Form>
