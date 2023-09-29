@@ -1,12 +1,13 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { Button, Col, Row, Space, Statistic, message } from 'antd';
-import { useMemo, useState } from 'react';
+import { Button, Row, Space, message } from 'antd';
+import { useState } from 'react';
 
 import AddProductModal, {
   AddProductFieldType,
 } from './components/Modal/AddProductModal';
 import ProductCard from './components/ProductCard';
+import AllProductStats from './components/Stats/AllProductStats';
 import { IProduct } from './types';
 
 const GET_ALL_PRODUCTS = gql`
@@ -57,15 +58,6 @@ export function Products(): JSX.Element {
     }
   );
 
-  const totalValofProducts = useMemo(() => {
-    const totalVal = AllProduct?.products?.reduce(
-      (acc: number, curr: IProduct) => acc + curr.stock * curr.price,
-      0
-    );
-
-    return totalVal;
-  }, [AllProduct?.products]);
-
   const hideModal = () => {
     setShowAddProductModal(false);
   };
@@ -96,17 +88,7 @@ export function Products(): JSX.Element {
         size={40}
         style={{ width: '100%', paddingBottom: '1rem' }}
       >
-        <Row justify='center' align='middle'>
-          <Col span={12}>
-            <Statistic title='Total value' value={totalValofProducts} />
-          </Col>
-          <Col span={12}>
-            <Statistic
-              title='Total products'
-              value={AllProduct?.products?.length}
-            />
-          </Col>
-        </Row>
+        <AllProductStats products={AllProduct?.products} />
 
         <Row justify='end'>
           <Button
