@@ -21,7 +21,7 @@ const AllProductStats: React.FC<IAllProductStats> = ({ products }) => {
   return (
     <Row justify='center' align='middle'>
       <Col span={12}>
-        <Statistic title='Total value' value={totalProductValue} />
+        <Statistic title='Total value' value={`${totalProductValue}$`} />
       </Col>
       <Col span={12}>
         <Statistic title='Total products' value={productCount} />
