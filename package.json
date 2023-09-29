@@ -23,7 +23,7 @@
     "eject": "react-scripts eject",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "lint": "yarn eslint"
+    "lint": "yarn eslint src"
   },
   "eslintConfig": {
     "extends": [

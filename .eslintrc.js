@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   env: {
     browser: true,
     es2021: true,
@@ -28,5 +28,13 @@ export default {
   },
   rules: {
     'react/react-in-jsx-scope': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0,
+    '@typescript-eslint/no-floating-promises': 0,
+    '@typescript-eslint/no-empty-function': ['warn'],
+    '@typescript-eslint/no-unsafe-assignment': ['warn'],
+    '@typescript-eslint/no-explicit-any': ['warn'],
+    '@typescript-eslint/no-unsafe-member-access': ['warn'],
+    '@typescript-eslint/no-unsafe-argument': ['warn'],
+    '@typescript-eslint/no-misused-promises': ['warn'],
   },
 };

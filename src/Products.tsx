@@ -49,7 +49,9 @@ const ADD_PRODUCT_MUTATION = gql`
 export function Products(): JSX.Element {
   const [showAddProductModal, setShowAddProductModal] = useState(false);
 
-  const { data: AllProduct } = useQuery(GET_ALL_PRODUCTS);
+  const { data: AllProduct } = useQuery<{ products: IProduct[] }>(
+    GET_ALL_PRODUCTS
+  );
 
   const [addProduct, { loading }] = useMutation<AddProductFieldType>(
     ADD_PRODUCT_MUTATION,
@@ -70,7 +72,7 @@ export function Products(): JSX.Element {
       setShowAddProductModal(false);
     } catch (err: any) {
       message.destroy();
-      if (err.message) {
+      if (err && err?.message) {
         message.error(err.message);
       }
     }

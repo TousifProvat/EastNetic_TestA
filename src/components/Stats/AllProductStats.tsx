@@ -3,11 +3,12 @@ import { useMemo } from 'react';
 import { IProduct } from '../../types';
 
 interface IAllProductStats {
-  products: IProduct[];
+  products: IProduct[] | undefined;
 }
 
 const AllProductStats = ({ products }: IAllProductStats) => {
   const totalProductValue = useMemo(() => {
+    if (!products) return 0;
     const totalVal = products?.reduce(
       (acc: number, curr: IProduct) => acc + curr.stock * curr.price,
       0
