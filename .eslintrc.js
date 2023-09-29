@@ -39,9 +39,5 @@ module.exports = {
     "@typescript-eslint/no-unsafe-member-access": ["warn"],
     "@typescript-eslint/no-unsafe-argument": ["warn"],
     "@typescript-eslint/no-misused-promises": ["warn"],
-    "testing-library/await-async-queries": "error",
-    "testing-library/no-await-sync-queries": "error",
-    "testing-library/no-debugging-utils": "warn",
-    "testing-library/no-dom-import": "off",
   },
 };
