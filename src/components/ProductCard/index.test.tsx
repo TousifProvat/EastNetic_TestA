@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 
-import ProductCard from ".";
+import ProductCard from "./index";
 
 describe("<ProductCard/>", () => {
   it("should render the product name, description, price and stock", () => {
