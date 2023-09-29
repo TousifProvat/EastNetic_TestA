@@ -15,11 +15,11 @@ export type AddProductFieldType = {
   description: string;
 };
 
-const AddProductModal: React.FC<AddProductModalProps> = ({
+const AddProductModal = ({
   visible,
   onCancel,
   submitHandler,
-}) => {
+}: AddProductModalProps) => {
   const [form] = Form.useForm();
 
   const hideModal = (e: MouseEvent<HTMLButtonElement>) => {

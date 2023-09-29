@@ -4,9 +4,16 @@ import Userevents from '@testing-library/user-event';
 import AddProductModal from './AddProductModal';
 
 describe('<AddProductModal/>', () => {
+  const handleClose = jest.fn();
+  const mockSubmit = jest.fn();
+
   it('should show the modal', () => {
     render(
-      <AddProductModal visible onCancel={() => {}} submitHandler={() => {}} />
+      <AddProductModal
+        visible
+        onCancel={handleClose}
+        submitHandler={mockSubmit}
+      />
     );
 
     expect(screen.getByText(/Add new product/)).toBeInTheDocument();
@@ -14,20 +21,22 @@ describe('<AddProductModal/>', () => {
 
   it('should show modal and add product form', () => {
     render(
-      <AddProductModal visible onCancel={() => {}} submitHandler={() => {}} />
+      <AddProductModal
+        visible
+        onCancel={handleClose}
+        submitHandler={mockSubmit}
+      />
     );
 
     expect(screen.getByTestId('add-product-form')).toBeInTheDocument();
   });
 
   it('should show modal and click cancel button', () => {
-    const handleClose = jest.fn();
-
     render(
       <AddProductModal
         visible
         onCancel={handleClose}
-        submitHandler={() => {}}
+        submitHandler={mockSubmit}
       />
     );
 
@@ -37,12 +46,14 @@ describe('<AddProductModal/>', () => {
   });
 
   it('should fill the add product form and submit', async () => {
-    const mockSubmit = jest.fn();
-
     const user = Userevents.setup();
 
     render(
-      <AddProductModal visible onCancel={() => {}} submitHandler={mockSubmit} />
+      <AddProductModal
+        visible
+        onCancel={handleClose}
+        submitHandler={mockSubmit}
+      />
     );
 
     await user.type(screen.getByTestId('product-name'), 'Samsung TV');

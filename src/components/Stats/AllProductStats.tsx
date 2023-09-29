@@ -6,7 +6,7 @@ interface IAllProductStats {
   products: IProduct[];
 }
 
-const AllProductStats: React.FC<IAllProductStats> = ({ products }) => {
+const AllProductStats = ({ products }: IAllProductStats) => {
   const totalProductValue = useMemo(() => {
     const totalVal = products?.reduce(
       (acc: number, curr: IProduct) => acc + curr.stock * curr.price,
